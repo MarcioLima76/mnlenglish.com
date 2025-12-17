@@ -1,1 +1,1354 @@
-MNL English web page built using HTML, CSS3 and javaScript.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcio Lima | Professional English Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --success: #27ae60;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header & Navigation */
+        
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-menu li {
+            margin-left: 25px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        /* Language Switcher */
+        
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 8px 15px;
+            background-color: transparent;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .lang-btn:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+        /* Hero Section */
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+            color: white;
+            padding: 160px 0 100px;
+            margin-top: 80px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp-button {
+            background-color: #25D366;
+            margin-left: 15px;
+        }
+        
+        .whatsapp-button:hover {
+            background-color: #1da851;
+        }
+        /* Sections */
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        /* About Section */
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img img:hover {
+            transform: scale(1.03);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .highlight-box {
+            background-color: var(--light);
+            border-left: 5px solid var(--secondary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .language-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .language-tag {
+            background-color: var(--secondary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .language-tag.native {
+            background-color: var(--success);
+        }
+        
+        .language-tag.intermediate {
+            background-color: #f39c12;
+        }
+        
+        .language-tag.beginner {
+            background-color: #95a5a6;
+        }
+        /* Qualifications */
+        
+        .qualifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .qual-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .qual-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .qual-card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        /* Experience */
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -10px;
+            transform: rotate(45deg);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -10px;
+            transform: rotate(45deg);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        /* Contact Form */
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-right: 15px;
+            width: 30px;
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        /* WhatsApp Button */
+        
+        .whatsapp-contact {
+            display: flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+            width: fit-content;
+        }
+        
+        .whatsapp-contact:hover {
+            background-color: #1da851;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp-contact i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        /* Footer */
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h3,
+        .footer-social h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        /* Language Content */
+        
+        .lang-content {
+            transition: opacity 0.3s ease;
+        }
+        
+        .lang-content:not(.active) {
+            display: none;
+        }
+        /* Responsive Styles */
+        
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-container {
+                flex-direction: column;
+            }
+            .about-img {
+                height: 350px;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            .timeline-dot {
+                left: 21px;
+            }
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 21px;
+            }
+            .timeline-content::after {
+                left: -10px;
+                transform: rotate(45deg);
+            }
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                margin: 15px 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .hero {
+                padding: 140px 0 80px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .lang-switcher {
+                margin-top: 10px;
+            }
+            .about-img {
+                height: 300px;
+            }
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: modalFade 0.5s;
+        }
+        
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        /* Language Flag */
+        
+        .lang-flag {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="nav-container">
+                <a href="#" class="logo">Marcio<span>Lima</span></a>
+
+                <div class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link" data-en="Home" data-pt="Início">Home</a></li>
+                    <li><a href="#about" class="nav-link" data-en="About" data-pt="Sobre">About</a></li>
+                    <li><a href="#qualifications" class="nav-link" data-en="Qualifications" data-pt="Qualificações">Qualifications</a></li>
+                    <li><a href="#experience" class="nav-link" data-en="Experience" data-pt="Experiência">Experience</a></li>
+                    <li><a href="#contact" class="nav-link" data-en="Contact" data-pt="Contato">Contact</a></li>
+                    <li>
+                        <div class="lang-switcher">
+                            <button class="lang-btn active" data-lang="en">
+                                <span class="lang-flag">🇺🇸</span> EN
+                            </button>
+                            <button class="lang-btn" data-lang="pt">
+                                <span class="lang-flag">🇧🇷</span> PT
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <!-- English Content -->
+            <div class="lang-content active" data-lang="en">
+                <h1>Professional English Teacher </h1>
+                <p>With over 15 years of experience, CELTA certification, and specialization in online instruction and English for IT professionals. I help students achieve fluency through communicative, student-centered methodologies.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#contact" class="cta-button" data-en="Schedule a Trial Lesson" data-pt="Agendar Aula Experimental">Schedule a Trial Lesson</a>
+                    <a href="https://wa.me/5544999302641?text=Hello%20Marcio,%20I'm%20interested%20in%20English%20lessons" target="_blank" class="cta-button whatsapp-button" data-en="Contact via WhatsApp" data-pt="Contato via WhatsApp">
+                        <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Portuguese Content -->
+            <div class="lang-content" data-lang="pt">
+                <h1>Professor de Inglês Profissional </h1>
+                <p>Com mais de 15 anos de experiência, certificação CELTA e especialização em ensino online e inglês para profissionais de TI. Ajudo alunos a alcançarem fluência através de metodologias comunicativas e centradas no estudante.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#contact" class="cta-button" data-en="Schedule a Trial Lesson" data-pt="Agendar Aula Experimental">Agendar Aula Experimental</a>
+                    <a href="https://wa.me/5544999302641?text=Olá%20Marcio,%20estou%20interessado%20em%20aulas%20de%20inglês" target="_blank" class="cta-button whatsapp-button" data-en="Contact via WhatsApp" data-pt="Contato via WhatsApp">
+                        <i class="fab fa-whatsapp"></i> Contato via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-content active" data-lang="en">About Me</h2>
+                <h2 class="lang-content" data-lang="pt">Sobre Mim</h2>
+            </div>
+
+            <div class="about-content">
+                <div class="about-img">
+                    <!-- Teacher Photo -->
+                    <img src="MNL.photo.png" alt="Marcio Lima - English Teacher" id="teacherPhoto" onerror="this.src='https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'">
+                </div>
+
+                <div class="about-text">
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Marcio Nogueira de Lima</h3>
+                        <p>I am a dedicated English teacher with a passion for language education and a unique blend of teaching expertise and technical knowledge. My journey includes three transformative years living in England, which provided authentic
+                            immersion and cultural understanding.</p>
+
+                        <div class="highlight-box">
+                            <p><strong>My Teaching Philosophy:</strong> I combine evidence-based communicative methods with real-world language application, focusing on student progress and practical results.</p>
+                        </div>
+
+                        <p>My background in Systems Analysis and Development gives me a unique advantage in today's digital learning environment, allowing me to create engaging online lessons and troubleshoot technical issues seamlessly.</p>
+
+                        <div style="margin-top: 25px;">
+                            <h4>Languages</h4>
+                            <div class="language-list">
+                                <span class="language-tag native">Portuguese (Native)</span>
+                                <span class="language-tag native">English (C2)</span>
+                                <span class="language-tag beginner">Italian (A1)</span>
+                                <span class="language-tag beginner">Spanish (A1)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portuguese Content -->
+                    <div class="lang-content" data-lang="pt">
+                        <h3>Marcio Nogueira de Lima</h3>
+                        <p>Sou um professor de inglês dedicado com paixão por educação linguística e uma combinação única de expertise em ensino e conhecimento técnico. Minha jornada inclui três anos transformadores vivendo na Inglaterra, que proporcionaram
+                            imersão autêntica e compreensão cultural.</p>
+
+                        <div class="highlight-box">
+                            <p><strong>Minha Filosofia de Ensino:</strong> Combino métodos comunicativos baseados em evidências com aplicação prática da língua, focando no progresso do aluno e resultados tangíveis.</p>
+                        </div>
+
+                        <p>Minha formação em Análise e Desenvolvimento de Sistemas me dá uma vantagem única no ambiente de aprendizagem digital atual, permitindo-me criar aulas online envolventes e solucionar problemas técnicos de forma integrada.</p>
+
+                        <div style="margin-top: 25px;">
+                            <h4>Idiomas</h4>
+                            <div class="language-list">
+                                <span class="language-tag native">Português (Nativo)</span>
+                                <span class="language-tag native">Inglês (C2)</span>
+                                <span class="language-tag beginner">Italiano (A1)</span>
+                                <span class="language-tag beginner">Espanhol (A1)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qualifications Section -->
+    <section id="qualifications" class="qualifications">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-content active" data-lang="en">Qualifications & Certifications</h2>
+                <h2 class="lang-content" data-lang="pt">Qualificações & Certificações</h2>
+            </div>
+
+            <div class="qualifications-grid">
+                <!-- Qualification 1 -->
+                <div class="qual-card">
+                    <i class="fas fa-certificate"></i>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>CELTA Certification</h3>
+                        <p>University of Cambridge (2025) - São Paulo Open Centre. The gold standard in English teaching certification, focusing on communicative language teaching.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <h3>Certificação CELTA</h3>
+                        <p>Universidade de Cambridge (2025) - São Paulo Open Centre. O padrão ouro em certificação de ensino de inglês, com foco no ensino comunicativo de línguas.</p>
+                    </div>
+                </div>
+
+                <!-- Qualification 2 -->
+                <div class="qual-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Modern Languages Degree</h3>
+                        <p>Unicesumar (2014-2017) - Portuguese and English specialization. Strong foundation in linguistics and language teaching methodology.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <h3>Graduação em Letras</h3>
+                        <p>Unicesumar (2014-2017) - Especialização em Português e Inglês. Base sólida em linguística e metodologia de ensino de línguas.</p>
+                    </div>
+                </div>
+
+                <!-- Qualification 3 -->
+                <div class="qual-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Systems Analysis & Development</h3>
+                        <p>UniFCV (2020-2023) - Technical knowledge that enhances my ability to create digital learning solutions and understand tech professionals' needs.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <h3>Análise e Desenvolvimento de Sistemas</h3>
+                        <p>UniFCV (2020-2023) - Conhecimento técnico que aprimora minha capacidade de criar soluções de aprendizagem digital e entender as necessidades de profissionais de TI.</p>
+                    </div>
+                </div>
+
+                <!-- Qualification 4 -->
+                <div class="qual-card">
+                    <i class="fas fa-globe"></i>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Cambridge ESOL</h3>
+                        <p>University of Cambridge, England (2006-2008) - Early certification that laid the foundation for my teaching career during my stay in the UK.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <h3>Cambridge ESOL</h3>
+                        <p>Universidade de Cambridge, Inglaterra (2006-2008) - Certificação inicial que estabeleceu a base para minha carreira de ensino durante minha estadia no Reino Unido.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-content active" data-lang="en">Professional Experience</h2>
+                <h2 class="lang-content" data-lang="pt">Experiência Profissional</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Experience 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Private English Teacher</h3>
+                            <h4>MNLEnglish • 2023 - Present</h4>
+                            <p>Providing personalized online English instruction with a focus on communicative methods and tailored lesson plans for individual student needs.</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Professor Particular de Inglês</h3>
+                            <h4>MNLEnglish • 2023 - Presente</h4>
+                            <p>Fornecendo instrução personalizada de inglês online com foco em métodos comunicativos e planos de aula adaptados às necessidades individuais dos alunos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>English Teacher for IT Professionals</h3>
+                            <h4>DevEnglish • 2022 - 2023</h4>
+                            <p>Specialized in teaching English to IT professionals, developing industry-specific materials and focusing on technical communication skills.</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Professor de Inglês para Profissionais de TI</h3>
+                            <h4>DevEnglish • 2022 - 2023</h4>
+                            <p>Especializado no ensino de inglês para profissionais de TI, desenvolvendo materiais específicos da indústria e focando em habilidades de comunicação técnica.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Online English Teacher</h3>
+                            <h4>New Age Academy • 2020 - 2022</h4>
+                            <p>Taught English using the Callan Method in an online format, mastering digital platforms and adapting communicative methods for virtual classrooms.</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Professor de Inglês Online</h3>
+                            <h4>New Age Academy • 2020 - 2022</h4>
+                            <p>Ensinei inglês usando o Método Callan em formato online, dominando plataformas digitais e adaptando métodos comunicativos para salas de aula virtuais.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>English Teacher</h3>
+                            <h4>MSI School • 2015 - 2018</h4>
+                            <p>Implemented the Oxford Method in classroom settings, focusing on student-centered learning and practical language application.</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Professor de Inglês</h3>
+                            <h4>MSI School • 2015 - 2018</h4>
+                            <p>Implementei o Método Oxford em ambientes de sala de aula, focando no aprendizado centrado no aluno e na aplicação prática da língua.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <button id="viewMoreBtn" class="cta-button" data-en="View Full Experience" data-pt="Ver Experiência Completa">View Full Experience</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-content active" data-lang="en">Contact Me</h2>
+                <h2 class="lang-content" data-lang="pt">Entre em Contato</h2>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3 class="lang-content active" data-lang="en">Get In Touch</h3>
+                    <h3 class="lang-content" data-lang="pt">Fale Comigo</h3>
+
+                    <div class="lang-content active" data-lang="en">
+                        <p>Interested in improving your English skills or discussing a teaching opportunity? Reach out to me using any of the methods below.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <p>Interessado em melhorar suas habilidades em inglês ou discutir uma oportunidade de ensino? Entre em contato comigo usando qualquer um dos métodos abaixo.</p>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 class="lang-content active" data-lang="en">Location</h4>
+                            <h4 class="lang-content" data-lang="pt">Localização</h4>
+                            <p>Maringá, Paraná, Brazil</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 class="lang-content active" data-lang="en">Phone</h4>
+                            <h4 class="lang-content" data-lang="pt">Telefone</h4>
+                            <p>+55 (44) 99930-2641</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 class="lang-content active" data-lang="en">Email</h4>
+                            <h4 class="lang-content" data-lang="pt">E-mail</h4>
+                            <p>marciolima76.ml@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fab fa-linkedin"></i>
+                        <div>
+                            <h4 class="lang-content active" data-lang="en">LinkedIn Profile</h4>
+                            <h4 class="lang-content" data-lang="pt">Perfil do LinkedIn</h4>
+                            <p><a href="https://www.linkedin.com/in/marcio-lima-45077376" target="_blank" style="color: var(--secondary);">linkedin.com/in/marcio-lima-45077376</a></p>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Contact Button -->
+                    <a href="https://wa.me/5544999302641?text=Hello%20Marcio,%20I'm%20interested%20in%20English%20lessons" target="_blank" class="whatsapp-contact" data-en="Contact via WhatsApp" data-pt="Contato via WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span class="lang-content active" data-lang="en">Contact via WhatsApp</span>
+                        <span class="lang-content" data-lang="pt">Contato via WhatsApp</span>
+                    </a>
+                </div>
+
+                <div class="contact-form">
+                    <h3 class="lang-content active" data-lang="en">Send a Message</h3>
+                    <h3 class="lang-content" data-lang="pt">Envie uma Mensagem</h3>
+
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="lang-content active" data-lang="en" for="name">Name</label>
+                            <label class="lang-content" data-lang="pt" for="name">Nome</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="lang-content active" data-lang="en" for="email">Email</label>
+                            <label class="lang-content" data-lang="pt" for="email">E-mail</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="lang-content active" data-lang="en" for="subject">Subject</label>
+                            <label class="lang-content" data-lang="pt" for="subject">Assunto</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="" class="lang-content active" data-lang="en">Select an option</option>
+                                <option value="" class="lang-content" data-lang="pt">Selecione uma opção</option>
+                                <option value="trial-lesson" class="lang-content active" data-lang="en">Trial Lesson</option>
+                                <option value="trial-lesson" class="lang-content" data-lang="pt">Aula Experimental</option>
+                                <option value="general-inquiry" class="lang-content active" data-lang="en">General Inquiry</option>
+                                <option value="general-inquiry" class="lang-content" data-lang="pt">Consulta Geral</option>
+                                <option value="corporate-training" class="lang-content active" data-lang="en">Corporate Training</option>
+                                <option value="corporate-training" class="lang-content" data-lang="pt">Treinamento Corporativo</option>
+                                <option value="other" class="lang-content active" data-lang="en">Other</option>
+                                <option value="other" class="lang-content" data-lang="pt">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="lang-content active" data-lang="en" for="message">Message</label>
+                            <label class="lang-content" data-lang="pt" for="message">Mensagem</label>
+                            <textarea id="message" rows="5" class="form-control" required></textarea>
+                        </div>
+
+                        <button type="submit" class="cta-button" style="width: 100%;" data-en="Send Message" data-pt="Enviar Mensagem">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Marcio<span>Lima</span></div>
+                    <div class="lang-content active" data-lang="en">
+                        <p>Professional English teacher specializing in online instruction and English for specific purposes, with over 15 years of experience and CELTA certification.</p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <p>Professor de inglês profissional especializado em ensino online e inglês para propósitos específicos, com mais de 15 anos de experiência e certificação CELTA.</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3 class="lang-content active" data-lang="en">Quick Links</h3>
+                    <h3 class="lang-content" data-lang="pt">Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#home" class="nav-link" data-en="Home" data-pt="Início">Home</a></li>
+                        <li><a href="#about" class="nav-link" data-en="About" data-pt="Sobre">About</a></li>
+                        <li><a href="#qualifications" class="nav-link" data-en="Qualifications" data-pt="Qualificações">Qualifications</a></li>
+                        <li><a href="#experience" class="nav-link" data-en="Experience" data-pt="Experiência">Experience</a></li>
+                        <li><a href="#contact" class="nav-link" data-en="Contact" data-pt="Contato">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-social">
+                    <h3 class="lang-content active" data-lang="en">Connect</h3>
+                    <h3 class="lang-content" data-lang="pt">Conecte-se</h3>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/marcio-lima-45077376" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:marciolima76.ml@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://wa.me/5544999302641" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p class="lang-content active" data-lang="en">&copy; 2025 Marcio Lima. All rights reserved.</p>
+                <p class="lang-content" data-lang="pt">&copy; 2025 Marcio Lima. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Experience Details -->
+    <div id="experienceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+
+            <!-- English Modal Content -->
+            <div class="lang-content active" data-lang="en">
+                <h2>Full Professional Experience</h2>
+
+                <div style="margin-top: 20px;">
+                    <h3>Teaching Methodology</h3>
+                    <p>My approach combines:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li><strong>Communicative Language Teaching (CLT):</strong> Focus on real communication as both the goal and means of learning.</li>
+                        <li><strong>Student-Centered Approach:</strong> Tailoring lessons to individual student needs, goals, and learning styles.</li>
+                        <li><strong>Task-Based Learning:</strong> Using meaningful tasks to encourage language use and problem-solving.</li>
+                        <li><strong>Blended Learning:</strong> Combining synchronous online instruction with asynchronous resources.</li>
+                    </ul>
+
+                    <h3>Specialized Experience</h3>
+                    <p><strong>English for Specific Purposes (ESP):</strong> Developed and delivered courses for IT professionals, focusing on technical vocabulary, meeting participation, documentation, and client communication.</p>
+
+                    <p><strong>Online Teaching Expertise:</strong> Since 2020, I have mastered various digital platforms (Zoom, Google Meet, specialized ESL platforms) and adapted communicative methodologies for the virtual classroom.</p>
+
+                    <h3>Additional Roles</h3>
+                    <p><strong>Coordinator Positions:</strong> Previously served as a coordinator, developing curriculum, mentoring new teachers, and ensuring educational standards.</p>
+
+                    <p><strong>Portuguese Instruction:</strong> Experience teaching Portuguese to English speakers, providing insight into the challenges of language acquisition from both perspectives.</p>
+                </div>
+            </div>
+
+            <!-- Portuguese Modal Content -->
+            <div class="lang-content" data-lang="pt">
+                <h2>Experiência Profissional Completa</h2>
+
+                <div style="margin-top: 20px;">
+                    <h3>Metodologia de Ensino</h3>
+                    <p>Minha abordagem combina:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li><strong>Ensino Comunicativo de Línguas (CLT):</strong> Foco na comunicação real como objetivo e meio de aprendizagem.</li>
+                        <li><strong>Abordagem Centrada no Aluno:</strong> Adaptação das aulas às necessidades, objetivos e estilos de aprendizagem individuais dos alunos.</li>
+                        <li><strong>Aprendizagem Baseada em Tarefas:</strong> Uso de tarefas significativas para incentivar o uso da língua e a resolução de problemas.</li>
+                        <li><strong>Aprendizagem Híbrida:</strong> Combinação de instrução online síncrona com recursos assíncronos.</li>
+                    </ul>
+
+                    <h3>Experiência Especializada</h3>
+                    <p><strong>Inglês para Propósitos Específicos (ESP):</strong> Desenvolvi e ministrei cursos para profissionais de TI, focando em vocabulário técnico, participação em reuniões, documentação e comunicação com clientes.</p>
+
+                    <p><strong>Expertise em Ensino Online:</strong> Desde 2020, domino várias plataformas digitais (Zoom, Google Meet, plataformas especializadas em ESL) e adaptei metodologias comunicativas para a sala de aula virtual.</p>
+
+                    <h3>Funções Adicionais</h3>
+                    <p><strong>Posições de Coordenação:</strong> Atuei anteriormente como coordenador, desenvolvendo currículo, mentorando novos professores e garantindo padrões educacionais.</p>
+
+                    <p><strong>Instrução de Português:</strong> Experiência no ensino de português para falantes de inglês, proporcionando insights sobre os desafios da aquisição de línguas de ambas as perspectivas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language Management
+        const currentLang = 'en'; // Default language
+        let activeLang = currentLang;
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            // Update language switcher buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update all language-specific content
+            document.querySelectorAll('.lang-content').forEach(content => {
+                if (content.dataset.lang === lang) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Update navigation links and buttons with data attributes
+            document.querySelectorAll('[data-en], [data-pt]').forEach(element => {
+                if (lang === 'en' && element.dataset.en) {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+                        element.textContent = element.dataset.en;
+                    } else if (element.tagName === 'OPTION') {
+                        // Options are handled separately
+                        element.textContent = element.dataset.en;
+                    }
+                } else if (lang === 'pt' && element.dataset.pt) {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+                        element.textContent = element.dataset.pt;
+                    } else if (element.tagName === 'OPTION') {
+                        // Options are handled separately
+                        element.textContent = element.dataset.pt;
+                    }
+                }
+            });
+
+            // Update form options separately (they need special handling)
+            document.querySelectorAll('option').forEach(option => {
+                const enContent = option.querySelector('.lang-content[data-lang="en"]');
+                const ptContent = option.querySelector('.lang-content[data-lang="pt"]');
+
+                if (enContent && ptContent) {
+                    if (lang === 'en') {
+                        option.textContent = enContent.textContent;
+                    } else {
+                        option.textContent = ptContent.textContent;
+                    }
+                }
+            });
+
+            activeLang = lang;
+
+            // Store preference in localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for saved language preference
+            const savedLang = localStorage.getItem('preferredLang');
+            const userLang = savedLang || (navigator.language.startsWith('pt') ? 'pt' : 'en');
+
+            // Set initial language
+            switchLanguage(userLang);
+
+            // Add click events to language switcher buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    switchLanguage(lang);
+                });
+            });
+        });
+
+        // Mobile Navigation Toggle
+        document.querySelector('.mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Show appropriate message based on language
+            if (activeLang === 'en') {
+                alert(`Thank you, ${name}! Your message has been sent. I will contact you at ${email} soon.`);
+            } else {
+                alert(`Obrigado, ${name}! Sua mensagem foi enviada. Entrarei em contato em ${email} em breve.`);
+            }
+
+            // Reset form
+            document.getElementById('contactForm').reset();
+        });
+
+        // Experience Modal
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        const experienceModal = document.getElementById('experienceModal');
+        const closeModal = document.querySelector('.close-modal');
+
+        viewMoreBtn.addEventListener('click', function() {
+            experienceModal.style.display = 'block';
+        });
+
+        closeModal.addEventListener('click', function() {
+            experienceModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === experienceModal) {
+                experienceModal.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Handle image loading error
+        document.getElementById('teacherPhoto').addEventListener('error', function() {
+            console.log('Image not found, using placeholder instead');
+            // Image already has a fallback in the onerror attribute
+        });
+    </script>
+</body>
+
+</html>
