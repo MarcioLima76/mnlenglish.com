@@ -7,6 +7,8 @@
     <title>Marcio Lima | Professional English Teacher</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
          :root {
             --primary: #2c3e50;
@@ -15,6 +17,7 @@
             --light: #ecf0f1;
             --dark: #1a252f;
             --success: #27ae60;
+            --warning: #f39c12;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
@@ -174,6 +177,12 @@
             background-color: #2980b9;
             transform: translateY(-3px);
             box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
         
         .whatsapp-button {
@@ -434,6 +443,65 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-family: 'Open Sans', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-control.error {
+            border-color: var(--accent) !important;
+            background-color: rgba(231, 76, 60, 0.05) !important;
+            border-width: 2px;
+        }
+        
+        .form-control.error:focus {
+            outline-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        /* Form Messages */
+        
+        .error-message {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            min-height: 20px;
+            font-weight: 500;
+        }
+        
+        .form-message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .form-message.success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .form-message.error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .form-message.info {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
         }
         /* WhatsApp Button */
         
@@ -628,6 +696,11 @@
             .about-img {
                 height: 300px;
             }
+            .cta-button,
+            .whatsapp-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
         }
         /* Modal */
         
@@ -676,6 +749,41 @@
         
         .lang-flag {
             margin-right: 5px;
+        }
+        /* Character Counter */
+        
+        .char-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .char-counter.warning {
+            color: var(--warning);
+        }
+        
+        .char-counter.error {
+            color: var(--accent);
+        }
+        /* Loading Animation */
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -752,7 +860,7 @@
             <div class="about-content">
                 <div class="about-img">
                     <!-- Teacher Photo -->
-                    <img src="MNL.photo.png" alt="Marcio Lima - English Teacher" id="teacherPhoto" onerror="this.src='https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'">
+                    <img src="MNL.photo.png" alt="Marcio Lima - English Teacher" id="teacherPhoto" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'">
                 </div>
 
                 <div class="about-text">
@@ -1023,42 +1131,67 @@
                     <h3 class="lang-content" data-lang="pt">Envie uma Mensagem</h3>
 
                     <form id="contactForm">
+                        <!-- Form messages will appear here -->
+                        <div id="formMessages"></div>
+
                         <div class="form-group">
-                            <label class="lang-content active" data-lang="en" for="name">Name</label>
-                            <label class="lang-content" data-lang="pt" for="name">Nome</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <label class="lang-content active" data-lang="en" for="name">Full Name *</label>
+                            <label class="lang-content" data-lang="pt" for="name">Nome Completo *</label>
+                            <input type="text" id="name" class="form-control" required minlength="2" maxlength="100">
+                            <div class="error-message" id="nameError"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="lang-content active" data-lang="en" for="email">Email</label>
-                            <label class="lang-content" data-lang="pt" for="email">E-mail</label>
+                            <label class="lang-content active" data-lang="en" for="email">Email Address *</label>
+                            <label class="lang-content" data-lang="pt" for="email">Endereço de E-mail *</label>
                             <input type="email" id="email" class="form-control" required>
+                            <div class="error-message" id="emailError"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="lang-content active" data-lang="en" for="subject">Subject</label>
-                            <label class="lang-content" data-lang="pt" for="subject">Assunto</label>
+                            <label class="lang-content active" data-lang="en" for="subject">Subject *</label>
+                            <label class="lang-content" data-lang="pt" for="subject">Assunto *</label>
                             <select id="subject" class="form-control" required>
-                                <option value="" class="lang-content active" data-lang="en">Select an option</option>
-                                <option value="" class="lang-content" data-lang="pt">Selecione uma opção</option>
-                                <option value="trial-lesson" class="lang-content active" data-lang="en">Trial Lesson</option>
-                                <option value="trial-lesson" class="lang-content" data-lang="pt">Aula Experimental</option>
-                                <option value="general-inquiry" class="lang-content active" data-lang="en">General Inquiry</option>
-                                <option value="general-inquiry" class="lang-content" data-lang="pt">Consulta Geral</option>
-                                <option value="corporate-training" class="lang-content active" data-lang="en">Corporate Training</option>
-                                <option value="corporate-training" class="lang-content" data-lang="pt">Treinamento Corporativo</option>
-                                <option value="other" class="lang-content active" data-lang="en">Other</option>
-                                <option value="other" class="lang-content" data-lang="pt">Outro</option>
+                                <option value="" disabled selected>
+                                    <span class="lang-content active" data-lang="en">Select an option</span>
+                                    <span class="lang-content" data-lang="pt">Selecione uma opção</span>
+                                </option>
+                                <option value="trial-lesson">
+                                    <span class="lang-content active" data-lang="en">Trial Lesson</span>
+                                    <span class="lang-content" data-lang="pt">Aula Experimental</span>
+                                </option>
+                                <option value="general-inquiry">
+                                    <span class="lang-content active" data-lang="en">General Inquiry</span>
+                                    <span class="lang-content" data-lang="pt">Consulta Geral</span>
+                                </option>
+                                <option value="corporate-training">
+                                    <span class="lang-content active" data-lang="en">Corporate Training</span>
+                                    <span class="lang-content" data-lang="pt">Treinamento Corporativo</span>
+                                </option>
+                                <option value="other">
+                                    <span class="lang-content active" data-lang="en">Other</span>
+                                    <span class="lang-content" data-lang="pt">Outro</span>
+                                </option>
                             </select>
+                            <div class="error-message" id="subjectError"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="lang-content active" data-lang="en" for="message">Message</label>
-                            <label class="lang-content" data-lang="pt" for="message">Mensagem</label>
-                            <textarea id="message" rows="5" class="form-control" required></textarea>
+                            <label class="lang-content active" data-lang="en" for="message">Your Message *</label>
+                            <label class="lang-content" data-lang="pt" for="message">Sua Mensagem *</label>
+                            <textarea id="message" rows="5" class="form-control" required minlength="10" maxlength="2000"></textarea>
+                            <div class="char-counter" id="messageCounter">0/2000</div>
+                            <div class="error-message" id="messageError"></div>
                         </div>
 
-                        <button type="submit" class="cta-button" style="width: 100%;" data-en="Send Message" data-pt="Enviar Mensagem">Send Message</button>
+                        <button type="submit" class="cta-button" style="width: 100%;" data-en="Send Message" data-pt="Enviar Mensagem">
+                            <span id="submitText">Send Message</span>
+                            <span id="submitLoading" style="display: none;">
+                                <span class="loading-spinner"></span>
+                                <span class="lang-content active" data-lang="en">Sending...</span>
+                                <span class="lang-content" data-lang="pt">Enviando...</span>
+                            </span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -1169,9 +1302,228 @@
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function() {
+            // Replace with your EmailJS Public Key
+            emailjs.init("YOUR_PUBLIC_KEY_HERE");
+            console.log("EmailJS initialized");
+        })();
+
         // Language Management
-        const currentLang = 'en'; // Default language
-        let activeLang = currentLang;
+        let activeLang = 'en';
+
+        // Validation rules
+        const validationRules = {
+            name: {
+                minLength: 2,
+                maxLength: 100,
+                regex: /^[a-zA-ZÀ-ÿ\s'-]+$/
+            },
+            email: {
+                regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            },
+            message: {
+                minLength: 10,
+                maxLength: 2000
+            }
+        };
+
+        // Error messages
+        const errorMessages = {
+            en: {
+                name: {
+                    required: "Please enter your name",
+                    minLength: "Name must be at least 2 characters",
+                    maxLength: "Name cannot exceed 100 characters",
+                    invalid: "Name contains invalid characters"
+                },
+                email: {
+                    required: "Please enter your email",
+                    invalid: "Please enter a valid email address"
+                },
+                subject: {
+                    required: "Please select a subject"
+                },
+                message: {
+                    required: "Please enter your message",
+                    minLength: "Message must be at least 10 characters",
+                    maxLength: "Message cannot exceed 2000 characters"
+                }
+            },
+            pt: {
+                name: {
+                    required: "Por favor, insira seu nome",
+                    minLength: "O nome deve ter pelo menos 2 caracteres",
+                    maxLength: "O nome não pode exceder 100 caracteres",
+                    invalid: "O nome contém caracteres inválidos"
+                },
+                email: {
+                    required: "Por favor, insira seu e-mail",
+                    invalid: "Por favor, insira um endereço de e-mail válido"
+                },
+                subject: {
+                    required: "Por favor, selecione um assunto"
+                },
+                message: {
+                    required: "Por favor, insira sua mensagem",
+                    minLength: "A mensagem deve ter pelo menos 10 caracteres",
+                    maxLength: "A mensagem não pode exceder 2000 caracteres"
+                }
+            }
+        };
+
+        // Function to validate a field
+        function validateField(fieldId, value) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(`${fieldId}Error`);
+
+            // Clear previous error
+            if (errorElement) errorElement.textContent = '';
+            if (field) field.classList.remove('error');
+
+            let isValid = true;
+            let errorMessage = '';
+
+            // Check if required field is empty
+            if (!value || value.trim() === '') {
+                isValid = false;
+                errorMessage = errorMessages[activeLang][fieldId].required;
+            } else {
+                // Field-specific validation
+                switch (fieldId) {
+                    case 'name':
+                        if (value.length < validationRules.name.minLength) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].name.minLength;
+                        } else if (value.length > validationRules.name.maxLength) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].name.maxLength;
+                        } else if (!validationRules.name.regex.test(value)) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].name.invalid;
+                        }
+                        break;
+
+                    case 'email':
+                        if (!validationRules.email.regex.test(value)) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].email.invalid;
+                        }
+                        break;
+
+                    case 'subject':
+                        // Already handled by required check
+                        break;
+
+                    case 'message':
+                        if (value.length < validationRules.message.minLength) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].message.minLength;
+                        } else if (value.length > validationRules.message.maxLength) {
+                            isValid = false;
+                            errorMessage = errorMessages[activeLang].message.maxLength;
+                        }
+                        break;
+                }
+            }
+
+            // Display error if validation failed
+            if (!isValid && errorElement && field) {
+                errorElement.textContent = errorMessage;
+                field.classList.add('error');
+            }
+
+            return isValid;
+        }
+
+        // Function to validate entire form
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const isNameValid = validateField('name', name);
+            const isEmailValid = validateField('email', email);
+            const isSubjectValid = validateField('subject', subject);
+            const isMessageValid = validateField('message', message);
+
+            return isNameValid && isEmailValid && isSubjectValid && isMessageValid;
+        }
+
+        // Function to show form message
+        function showFormMessage(type, text) {
+            const messagesDiv = document.getElementById('formMessages');
+            messagesDiv.innerHTML = `
+                <div class="form-message ${type}">
+                    ${text}
+                </div>
+            `;
+
+            // Auto-remove success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    const message = messagesDiv.querySelector('.form-message');
+                    if (message) {
+                        message.style.opacity = '0';
+                        message.style.transition = 'opacity 0.5s';
+                        setTimeout(() => messagesDiv.innerHTML = '', 500);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Function to set loading state
+        function setLoading(isLoading) {
+            const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
+
+            if (isLoading) {
+                submitBtn.disabled = true;
+                submitText.style.display = 'none';
+                submitLoading.style.display = 'inline';
+            } else {
+                submitBtn.disabled = false;
+                submitText.style.display = 'inline';
+                submitLoading.style.display = 'none';
+            }
+        }
+
+        // Function to send email via EmailJS
+        async function sendEmail(formData) {
+            try {
+                // Prepare template parameters
+                const templateParams = {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                    date: new Date().toLocaleString(),
+                    language: activeLang
+                };
+
+                // Send email using EmailJS
+                // Replace with your actual Service ID and Template ID
+                const response = await emailjs.send(
+                    "YOUR_SERVICE_ID_HERE", // Replace with your EmailJS Service ID
+                    "YOUR_TEMPLATE_ID_HERE", // Replace with your EmailJS Template ID
+                    templateParams
+                );
+
+                return {
+                    success: true,
+                    response
+                };
+
+            } catch (error) {
+                console.error('EmailJS Error:', error);
+                return {
+                    success: false,
+                    error
+                };
+            }
+        }
 
         // Function to switch language
         function switchLanguage(lang) {
@@ -1196,43 +1548,21 @@
             // Update navigation links and buttons with data attributes
             document.querySelectorAll('[data-en], [data-pt]').forEach(element => {
                 if (lang === 'en' && element.dataset.en) {
-                    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
-                        element.textContent = element.dataset.en;
-                    } else if (element.tagName === 'OPTION') {
-                        // Options are handled separately
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
                         element.textContent = element.dataset.en;
                     }
                 } else if (lang === 'pt' && element.dataset.pt) {
-                    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
                         element.textContent = element.dataset.pt;
-                    } else if (element.tagName === 'OPTION') {
-                        // Options are handled separately
-                        element.textContent = element.dataset.pt;
-                    }
-                }
-            });
-
-            // Update form options separately (they need special handling)
-            document.querySelectorAll('option').forEach(option => {
-                const enContent = option.querySelector('.lang-content[data-lang="en"]');
-                const ptContent = option.querySelector('.lang-content[data-lang="pt"]');
-
-                if (enContent && ptContent) {
-                    if (lang === 'en') {
-                        option.textContent = enContent.textContent;
-                    } else {
-                        option.textContent = ptContent.textContent;
                     }
                 }
             });
 
             activeLang = lang;
-
-            // Store preference in localStorage
             localStorage.setItem('preferredLang', lang);
         }
 
-        // Initialize language on page load
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Check for saved language preference
             const savedLang = localStorage.getItem('preferredLang');
@@ -1248,105 +1578,187 @@
                     switchLanguage(lang);
                 });
             });
-        });
 
-        // Mobile Navigation Toggle
-        document.querySelector('.mobile-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-menu').classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelector('.nav-menu').classList.remove('active');
+            // Mobile Navigation Toggle
+            document.querySelector('.mobile-toggle').addEventListener('click', function() {
+                document.querySelector('.nav-menu').classList.toggle('active');
             });
-        });
 
-        // Contact Form Submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.querySelector('.nav-menu').classList.remove('active');
+                });
+            });
 
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+            // Character counter for message field
+            const messageField = document.getElementById('message');
+            const messageCounter = document.getElementById('messageCounter');
 
-            // Show appropriate message based on language
-            if (activeLang === 'en') {
-                alert(`Thank you, ${name}! Your message has been sent. I will contact you at ${email} soon.`);
-            } else {
-                alert(`Obrigado, ${name}! Sua mensagem foi enviada. Entrarei em contato em ${email} em breve.`);
+            if (messageField && messageCounter) {
+                messageField.addEventListener('input', function() {
+                    const length = this.value.length;
+                    messageCounter.textContent = `${length}/2000`;
+
+                    // Update counter color based on length
+                    if (length > 1800) {
+                        messageCounter.className = 'char-counter warning';
+                    } else if (length > 1900) {
+                        messageCounter.className = 'char-counter error';
+                    } else {
+                        messageCounter.className = 'char-counter';
+                    }
+                });
             }
 
-            // Reset form
-            document.getElementById('contactForm').reset();
-        });
+            // Real-time validation
+            const formFields = ['name', 'email', 'subject', 'message'];
+            formFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('blur', () => {
+                        validateField(fieldId, field.value);
+                    });
 
-        // Experience Modal
-        const viewMoreBtn = document.getElementById('viewMoreBtn');
-        const experienceModal = document.getElementById('experienceModal');
-        const closeModal = document.querySelector('.close-modal');
+                    // For select field
+                    if (fieldId === 'subject') {
+                        field.addEventListener('change', () => {
+                            validateField(fieldId, field.value);
+                        });
+                    }
+                }
+            });
 
-        viewMoreBtn.addEventListener('click', function() {
-            experienceModal.style.display = 'block';
-        });
-
-        closeModal.addEventListener('click', function() {
-            experienceModal.style.display = 'none';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === experienceModal) {
-                experienceModal.style.display = 'none';
-            }
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            // Contact Form Submission
+            document.getElementById('contactForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                // Clear previous messages
+                document.getElementById('formMessages').innerHTML = '';
 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                // Validate form
+                if (!validateForm()) {
+                    const errorMsg = activeLang === 'en' ?
+                        'Please fix the errors in the form before submitting.' :
+                        'Por favor, corrija os erros no formulário antes de enviar.';
+                    showFormMessage('error', errorMsg);
+                    return;
+                }
+
+                // Get form values
+                const formData = {
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value.trim()
+                };
+
+                // Set loading state
+                setLoading(true);
+
+                // Send email
+                const result = await sendEmail(formData);
+
+                // Remove loading state
+                setLoading(false);
+
+                if (result.success) {
+                    // Show success message
+                    const successMsg = activeLang === 'en' ?
+                        `Thank you, ${formData.name}! Your message has been sent successfully. I will contact you at ${formData.email} soon.` :
+                        `Obrigado, ${formData.name}! Sua mensagem foi enviada com sucesso. Entrarei em contato em ${formData.email} em breve.`;
+
+                    showFormMessage('success', successMsg);
+
+                    // Reset form
+                    document.getElementById('contactForm').reset();
+
+                    // Reset character counter
+                    if (messageCounter) {
+                        messageCounter.textContent = '0/2000';
+                        messageCounter.className = 'char-counter';
+                    }
+
+                    // Clear error messages
+                    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+
+                } else {
+                    // Show error message
+                    const errorMsg = activeLang === 'en' ?
+                        'Sorry, there was an error sending your message. Please try again or contact me directly via WhatsApp.' :
+                        'Desculpe, houve um erro ao enviar sua mensagem. Tente novamente ou entre em contato diretamente pelo WhatsApp.';
+
+                    showFormMessage('error', errorMsg);
                 }
             });
-        });
 
-        // Add active class to nav links on scroll
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-menu a');
+            // Experience Modal
+            const viewMoreBtn = document.getElementById('viewMoreBtn');
+            const experienceModal = document.getElementById('experienceModal');
+            const closeModal = document.querySelector('.close-modal');
 
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 100)) {
-                    current = section.getAttribute('id');
-                }
+            if (viewMoreBtn && experienceModal && closeModal) {
+                viewMoreBtn.addEventListener('click', function() {
+                    experienceModal.style.display = 'block';
+                });
+
+                closeModal.addEventListener('click', function() {
+                    experienceModal.style.display = 'none';
+                });
+
+                // Close modal when clicking outside
+                window.addEventListener('click', function(e) {
+                    if (e.target === experienceModal) {
+                        experienceModal.style.display = 'none';
+                    }
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
+            // Add active class to nav links on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('.nav-menu a');
 
-        // Handle image loading error
-        document.getElementById('teacherPhoto').addEventListener('error', function() {
-            console.log('Image not found, using placeholder instead');
-            // Image already has a fallback in the onerror attribute
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Handle image loading error
+            document.getElementById('teacherPhoto').addEventListener('error', function() {
+                console.log('Image not found, using placeholder instead');
+            });
         });
     </script>
 </body>
